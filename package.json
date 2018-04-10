@@ -1,0 +1,16 @@
+{
+  "name": "13-newJs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "serve": "live-server public --port=5555",
+    "lint": "./node_modules/.bin/eslint public/*.js --fix; exit 0"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.10.0",
+    "live-server": "^1.2.0"
+  }
+}
