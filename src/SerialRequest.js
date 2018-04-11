@@ -27,35 +27,32 @@ export default class SerialRequest {
 
     return this;
   }
-
+  /**
+   * Берет из "очереди" первый элемент и вызывает с ним fetcher()
+   */
   executer() {
     if (this.chain.length > 0) {
       const toExec = this.chain.splice(0, 1)[0];
-      console.log('что то делаю', toExec.url);
+      this.fetcher(toExec);
       this.isPending = false;
     }
   }
-
   /**
-   * Выполняет запрос, возвращает результат
+   * Вызывает fetch() с переденныеми параметрами
+   * @param {Object} params 
    */
-  // execQuery(url, res, rej) {
-
-  //   let result =
-
-  //   fetch(url)
-  //     .then(data => data.json())
-  //     .then((data) => {
-  //       return data;
-  //     })
-  //     .catch((err) => {  
-  //       rej;  
-  //     });
-
-  //   res();
-
-  //   return result;
-  // }
+  fetcher(params) {
+    fetch(params.url)
+      .then((response) => {
+        this.currentResult = response;
+        params.res(response);
+        console.log('!!!', this.currentResult);
+        this.executer();
+      })
+      .catch((error) => {
+        rej(error);
+      });
+  }
 
   /**
    * Создает очередь запросов
@@ -64,7 +61,6 @@ export default class SerialRequest {
    * @param {rej} rej 
    */
   putInChain(url, res, rej) {
-    console.log(3333);
     this.chain.push({
       url,
       res,
