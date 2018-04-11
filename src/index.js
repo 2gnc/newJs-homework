@@ -5,7 +5,7 @@ const urls = [
   'https://jsonplaceholder.typicode.com/posts/2',
 ];
 
-const ok = (resp, prev) => console.log('выполнился без ошибок', resp, prev);
+const ok = (resp, prev) => console.log('выполнился без ошибок', resp, prev.url);
 const no = err => console.log('возникли ошибки', err);
 
 const se = new Serial();
