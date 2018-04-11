@@ -17,24 +17,45 @@ export default class SerialRequest {
    * @param {Function} rej колбэк в случае неудачного запроса
    */
   get(url, res, rej) {
-    if (this.isPending) {
-      this.putInChain(url, res, rej);
-    } else {
-      this.execQuery(url, res, rej);
+
+    this.putInChain(url, res, rej);
+
+    if (!this.isPending) {
+      this.isPending = true;
+      this.executer();
+    }
+
+    return this;
+  }
+
+  executer() {
+    if (this.chain.length > 0) {
+      const toExec = this.chain.splice(0, 1)[0];
+      console.log('что то делаю', toExec.url);
+      this.isPending = false;
     }
   }
 
   /**
    * Выполняет запрос, возвращает результат
    */
-  execQuery(url, res, rej) {
-    console.log(`Выполняю запрос к ${url}`);
-    // отмечаем, что начался обмен
-    this.isPending = true;
-    const result = fetch(url).then(res).catch(rej);
-    this.isPending = false;
-    return result;
-  }
+  // execQuery(url, res, rej) {
+
+  //   let result =
+
+  //   fetch(url)
+  //     .then(data => data.json())
+  //     .then((data) => {
+  //       return data;
+  //     })
+  //     .catch((err) => {  
+  //       rej;  
+  //     });
+
+  //   res();
+
+  //   return result;
+  // }
 
   /**
    * Создает очередь запросов
@@ -43,6 +64,7 @@ export default class SerialRequest {
    * @param {rej} rej 
    */
   putInChain(url, res, rej) {
+    console.log(3333);
     this.chain.push({
       url,
       res,
