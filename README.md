@@ -15,4 +15,4 @@
 На текущий момент не удалось реализовать получение результата предыдущего вызова - постараюсь сделать.
 
 ## Демо
-В файле index.js подключен модуль. В качестве тестового API использован (typicode.com)[https://jsonplaceholder.typicode.com/].
+В файле index.js подключен модуль. В качестве тестового API использован [typicode.com](https://jsonplaceholder.typicode.com/).
