@@ -45,12 +45,11 @@ export default class SerialRequest {
     fetch(params.url)
       .then((response) => {
         this.currentResult = response;
-        params.res(response);
-        console.log('!!!', this.currentResult);
+        params.res(response, this.currentResult);
         this.executer();
       })
       .catch((error) => {
-        rej(error);
+        params.rej(error);
       });
   }
 
