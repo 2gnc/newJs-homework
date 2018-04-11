@@ -27,7 +27,6 @@
 const no = err => console.log('возникли ошибки', err);```
 
 Делаем запросы
-```
-se.get(urls[0], ok, no)
+```se.get(urls[0], ok, no)
   .get(urls[1], ok, no);
-  ```
+```
