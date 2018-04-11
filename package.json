@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "serve": "live-server dist --port=5555",
-    "lint": "./node_modules/.bin/eslint public/*.js --fix; exit 0",
+    "lint": "./node_modules/.bin/eslint src/*.js --fix; exit 0",
     "dev": "webpack --watch",
     "build": "webpack"
   },

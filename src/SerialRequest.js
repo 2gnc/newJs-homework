@@ -39,7 +39,7 @@ export default class SerialRequest {
   }
   /**
    * Вызывает fetch() с переденныеми параметрами
-   * @param {Object} params 
+   * @param {Object} params
    */
   fetcher(params) {
     fetch(params.url)
@@ -56,9 +56,9 @@ export default class SerialRequest {
 
   /**
    * Создает очередь запросов
-   * @param {url} url  
-   * @param {res} res 
-   * @param {rej} rej 
+   * @param {url} url
+   * @param {res} res
+   * @param {rej} rej
    */
   putInChain(url, res, rej) {
     this.chain.push({
