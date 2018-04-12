@@ -1,5 +1,5 @@
 
-export default class SerialRequest {
+class SerialRequest {
 
   constructor() {
     this.prevRes = null;
@@ -21,3 +21,5 @@ export default class SerialRequest {
   }
 
 }
+
+module.exports = SerialRequest;

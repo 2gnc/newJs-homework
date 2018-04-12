@@ -1,4 +1,4 @@
-import Serial from './SerialRequest';
+const Serial = require('./SerialRequest');
 
 const urls = [
   'https://jsonplaceholder.typicode.com/photos',
