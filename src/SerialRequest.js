@@ -2,7 +2,6 @@
 class SerialRequest {
 
   constructor() {
-    this.prevRes = null;
     this.promise = Promise.resolve();
   }
   /**
@@ -17,11 +16,12 @@ class SerialRequest {
     this.promise = this.promise
       .then(() => fetch(url)
         .then((res) => {
-          let response = this.toJson(res);
-          this.prevRes = res;
-          return response;
+          return this.toJson(res)
+            .then((response) => {
+              return { response, res };
+            });
         })
-        .then(data => onRes(data, this.prevRes))
+        .then(data => onRes(data.response, data.res))
         .catch(err => onRej(err)))
       .catch(err => onRej(err));
     return this;
