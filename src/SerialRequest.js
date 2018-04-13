@@ -5,7 +5,10 @@ class SerialRequest {
     this.prevRes = null;
     this.promise = Promise.resolve();
   }
-
+  /**
+   *  Так сделано, чтобы можно было подменить этот метод в тестах
+   * @param {Response} smth ответ из fetch()
+   */
   toJson(smth) {
     return smth.json();
   }
