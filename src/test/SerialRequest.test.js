@@ -1,21 +1,18 @@
 const { assert } = require('chai');
 const Serial = require('../SerialRequest');
-const sinon = require('sinon');
-const data = require('./testData.json');
 
-class ss extends Serial {
-  constructor(fakeJs) {
+class SerialTesting extends Serial {
+  constructor(fake) {
     super();
-    this.fake = fakeJs;
+    this.fake = fake;
   }
   toJson() {
     return this.fake;
   } 
+  toFetch() {
+    return Promise.resolve();
+  }
 };
-
-const se = new ss(data);
-
-global.fetch = () => {};
 
 const urls = [
   'https://jsonplaceholder.typicode.com/photos',
@@ -29,22 +26,34 @@ const ok = (res) => {
   testOne = true;
   resp = res;
 };
-const no = () => { testTwo = false; };
-
-const pro = new Promise((res, rej) => {
-  se.get(urls[0], ok, no)
-    .get(urls[1], ok, no);
-  res();
-});
-
-sinon.stub(global, 'fetch').returns(Promise.resolve());
+const no = () => { testTwo = true; };
 
 describe('SerialRequest', () => {
-  it('должен выполняться колбэк Ok', (done) => {
+  it('должен выполняться колбэк Ok в случае успеха', (done) => {
+
+    const se = new SerialTesting('test');
+    const pro = new Promise((res, rej) => {
+      se.get(urls[0], ok, no)
+        .get(urls[1], ok, no);
+      res();
+    });
+
     pro
       .then(() => { done(); })
       .then(() => { assert.equal(testOne, true); })
       .catch(err => console.log(err));
+  });
+
+  it('Должен вызываться колбэк No в случае ошибки', (done) => {
+    const se = new SerialTesting('test');
+    const pro = new Promise((res, rej) => {
+      se.get(urls[0], ok, no)
+        .get(urls[1], ok, no);
+      rej();
+    });
+    pro
+      .then(() => { assert.equal(testTwo, true); })
+      .catch(() => done());
   });
 });
 
